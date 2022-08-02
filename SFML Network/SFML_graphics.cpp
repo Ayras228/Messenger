@@ -2,34 +2,9 @@
 #include<iostream>
 #include<vector>
 #include<iterator>
-struct Position
-{
-
-    /*
-    x0_y0    x1_y0
-
-    x0_y1    x1_y1
-    */
-    std::pair<short, short> x0_y0;
-    std::pair<short, short> x1_y1;
-
-};
 
 
-struct People
-{
-    int age;
-    std::string name;
-};
 
-
-struct Spritepos
-{
-    sf::Sprite *sprite;
-    std::pair<short,short> size;//<width,height>
-    Position position;
-
-};
 
 class Graphics
 {
@@ -38,28 +13,39 @@ public:
     Graphics(unsigned int WIDTH, unsigned int HEIGHT);
     Graphics(unsigned int WIDTH, unsigned int HEIGHT, std::string name);
 	~Graphics();
-    void init_element();
+
+
+    void init();
+    void _init_button();
+
+
     void init_sprites();
     void load_textures();
-    void rect_textures(Spritepos &sprite_botton1_size);
-    void set_positions(Spritepos &sprite_botton1_size);
+    void rect_button1(sf::Sprite& sprite_button);
+    void rect_textures(sf::Sprite& sprite_button, short rectLeft, short rectTop,
+        short rectWidth, short rectHeight);
+    void set_button1_positions(sf::Sprite&sprite_button);
+    void set_positions(sf::Sprite& sprite_button, short x0, short y0);
     void click(sf::Event event);
+
+
     void draw();
     sf::RenderWindow *get_window();
 private:
     unsigned int HEIGHT;
     unsigned int WIDTH;
     sf::RenderWindow window;
-    sf::Texture texture_botton1, texture_botton2, texture_botton3,
+
+    sf::Texture texture_button1, texture_button2, texture_button3,
         texture_background, texture_frame;
-    
+    sf::Texture *textures[5] = { &texture_button1, &texture_button2, &texture_button3,
+        &texture_background, &texture_frame };
 
 
 
-    sf::Sprite sprite_botton1, sprite_botton2,sprite_botton3,
-        sprite_background, sprite_frame;
-    //std::map<sf::Sprite*,std::pair<short, short>> sprite_size;
-    std::vector<Spritepos> spritespos;
+    sf::Sprite button1, button2, button3, background, frame;
+    sf::Sprite* sprites[5] = { &button1, &button2, &button3, &background, &frame };
+
 
 };  
 
@@ -93,77 +79,88 @@ Graphics::~Graphics()
 
 void Graphics::init_sprites()
 {
-    sprite_botton1.setTexture(texture_botton1);
-    sprite_botton2.setTexture(texture_botton2);
-    sprite_botton3.setTexture(texture_botton3);
-    sprite_background.setTexture(texture_background);
-    sprite_frame.setTexture(texture_frame);   
+
+    button1.setTexture(texture_button1);
+    button2.setTexture(texture_button2);
+    button3.setTexture(texture_button3);
+    background.setTexture(texture_background);
+    frame.setTexture(texture_frame);
+
+
 }
 void Graphics::load_textures()
 {
-    texture_botton1.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\start.png");
+    texture_button1.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\start.png");
     
 }
-void Graphics::rect_textures(Spritepos &sprite_botton1_size)
+void Graphics::rect_button1(sf::Sprite&sprite_button)
 {
     short  rectLeft = 250, rectTop = 165, rectWidth = 350,   rectHeight = 185;
-    
-    sprite_botton1_size.size = std::pair<short, short>(rectWidth, rectHeight);
-    sprite_botton1_size.sprite = &sprite_botton1;
 
-    sprite_botton1.setTextureRect(sf::IntRect(rectLeft, rectTop, rectWidth, rectHeight));
-    
+    sprite_button.setTextureRect(sf::IntRect(rectLeft, rectTop, rectWidth, rectHeight));
 }
-void Graphics::set_positions(Spritepos &sprite_botton1_size)
+void Graphics::rect_textures(sf::Sprite& sprite_button, short rectLeft,
+    short rectTop, short rectWidth, short rectHeight)
 {
-    sprite_botton1_size.position.x0_y0 = std::make_pair<short, short>(WIDTH / 2, HEIGHT / 2);
-    short size_w = sprite_botton1_size.size.first;
-    short size_h = sprite_botton1_size.size.second;
-    sprite_botton1_size.position.x1_y1 = std::make_pair<short, short>(WIDTH / 2 + size_w, HEIGHT / 2 + size_h);
-    sprite_botton1.setPosition(WIDTH / 2, HEIGHT / 2);
 
-    
+    sprite_button.setTextureRect(sf::IntRect(rectLeft, rectTop, rectWidth, rectHeight));
+
 }
-void Graphics::init_element()
+void Graphics::set_button1_positions(sf::Sprite&sprite_button)
 {
-    Spritepos sprite_botton1_size;
+
+    sprite_button.setPosition(WIDTH / 2, HEIGHT / 2);
+  
+}
+void Graphics::set_positions(sf::Sprite& sprite_button, short x0, short y0)
+{
+
+    sprite_button.setPosition(x0, y0);
+
+}
+
+void Graphics::_init_button()
+{
+    
+    for (sf::Sprite *sprite_button:sprites)
+    {
+        rect_button1(*sprite_button);
+        set_button1_positions(*sprite_button);
+        break;//for 1 button
+    }
+   
+}
+
+void Graphics::init()
+{
     init_sprites();
     load_textures();
-    rect_textures(sprite_botton1_size);
-    set_positions(sprite_botton1_size);
-    spritespos.push_back(sprite_botton1_size);
+    _init_button();
 }
+
 void Graphics::click(sf::Event event)
 {
-    if (event.type == sf::Event::MouseButtonPressed)
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        if (event.mouseButton.button == sf::Mouse::Left)
+        for (sf::Sprite *sprite_button : sprites)
         {
-            for(Spritepos pos:spritespos)
-            {
 
-                if (pos.position.x0_y0.first<event.mouseButton.x && event.mouseButton.x < pos.position.x1_y1.first
-                    && pos.position.x0_y0.second < event.mouseButton.y && event.mouseButton.y < pos.position.x1_y1.second)
-                {
-                    std::cout << "the left button was pressed" << std::endl;
-                    std::cout << "x0_y0.first: " << pos.position.x0_y0.first << std::endl;
-                    std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-                    std::cout << "x1_y1.first: " << pos.position.x1_y1.first << std::endl;
-                    std::cout << "##################################"<< std::endl;
-                    std::cout << "x0_y0.second: " << pos.position.x0_y0.second << std::endl;
-                    std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-                    std::cout << "x1_y1.second: " << pos.position.x1_y1.second << std::endl;
-                    std::cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
-                }
+            if (sprite_button->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y))
+            {
+                std::cout << "the left button was pressed" << std::endl;
+                std::cout << "x0_y0.first: " << sf::Mouse::getPosition(window).x << std::endl;
+                std::cout << "x0_y0.first: " << sf::Mouse::getPosition(window).y << std::endl;
+                std::cout << "sprite x: " << sprite_button->getPosition().x << std::endl;
+                std::cout << "sprite y: " << sprite_button->getPosition().y << std::endl;
             }
-            
-            
         }
+
     }
 }
+
 void Graphics::draw()
 {
-    window.draw(sprite_botton1);
+    window.draw(button1);
 }
 sf::RenderWindow *Graphics::get_window()
 {
@@ -176,7 +173,8 @@ int main()
     Graphics graph;
     sf::RenderWindow *window = graph.get_window();
     window->clear(sf::Color::Black);
-    graph.init_element();
+    graph.init();
+   
 
     while (window->isOpen())
     {
