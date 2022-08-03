@@ -35,18 +35,36 @@ private:
     unsigned int HEIGHT;
     unsigned int WIDTH;
     sf::RenderWindow window;
+    static short const count_element = 5;
+    static short const rect_count_param = 4;
+    static short const position_count_param = 2;
 
     sf::Texture texture_button1, texture_button2, texture_button3,
         texture_background, texture_frame;
-    sf::Texture *textures[5] = { &texture_button1, &texture_button2, &texture_button3,
+    sf::Texture *textures[count_element] = { &texture_button1, &texture_button2, &texture_button3,
         &texture_background, &texture_frame };
 
 
 
     sf::Sprite button1, button2, button3, background, frame;
-    sf::Sprite* sprites[5] = { &button1, &button2, &button3, &background, &frame };
+    sf::Sprite* sprites[count_element] = { &button1, &button2, &button3, &background, &frame };
 
-
+    short rect_len_sprite[count_element][rect_count_param] =
+    { 
+        {250,165, 350, 185},
+        {250,165, 350, 185},
+        {250,165, 350, 185},
+        {250,165, 350, 185}, 
+        {250,165, 350, 185}
+    };
+    short position_sprite[count_element][position_count_param] =
+    {
+        {0,0},
+        {300,150},
+        {690,360},
+        {800,500},
+        {1280,720}
+    };
 };  
 
 Graphics::Graphics()
@@ -91,6 +109,8 @@ void Graphics::init_sprites()
 void Graphics::load_textures()
 {
     texture_button1.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\start.png");
+    texture_button2.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\start.png");
+    texture_button3.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\start.png");
     
 }
 void Graphics::rect_button1(sf::Sprite&sprite_button)
@@ -121,12 +141,12 @@ void Graphics::set_positions(sf::Sprite& sprite_button, short x0, short y0)
 
 void Graphics::_init_button()
 {
-    
+    int index=0;
     for (sf::Sprite *sprite_button:sprites)
     {
-        rect_button1(*sprite_button);
-        set_button1_positions(*sprite_button);
-        break;//for 1 button
+        rect_textures(*sprite_button,rect_len_sprite[index][0], rect_len_sprite[index][1], rect_len_sprite[index][2], rect_len_sprite[index][3]);
+        set_positions(*sprite_button, position_sprite[index][0], position_sprite[index][1]);
+        index++;
     }
    
 }
@@ -161,6 +181,10 @@ void Graphics::click(sf::Event event)
 void Graphics::draw()
 {
     window.draw(button1);
+    window.draw(button2);
+    window.draw(button3);
+
+
 }
 sf::RenderWindow *Graphics::get_window()
 {

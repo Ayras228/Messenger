@@ -1,6 +1,6 @@
 ﻿  SFML_graphics.cpp
-d:\universe\c++\study_network\sfml network\sfml_graphics.cpp(112): warning C4244: аргумент: преобразование "unsigned int" в "float", возможна потеря данных
-d:\universe\c++\study_network\sfml network\sfml_graphics.cpp(148): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+d:\universe\c++\study_network\sfml network\sfml_graphics.cpp(132): warning C4244: аргумент: преобразование "unsigned int" в "float", возможна потеря данных
+d:\universe\c++\study_network\sfml network\sfml_graphics.cpp(168): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
           with
           [
               T=int
