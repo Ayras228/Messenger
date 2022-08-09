@@ -143,21 +143,27 @@
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="console_messanger.cpp" />
-    <ClCompile Include="Example_grafics_figure.cpp" />
-    <ClCompile Include="Example_grafics_point.cpp" />
-    <ClCompile Include="Example_sprite.cpp" />
-    <ClCompile Include="grafic_tetris.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="SFML_graphics.cpp" />
+    <ClCompile Include="main_graphics.cpp" />
+    <ClCompile Include="Graphics.h" />
+    <ClCompile Include="SpriteHandler.cpp" />
     <ClCompile Include="User.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="SpriteHandler.h" />
     <ClInclude Include="User.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
