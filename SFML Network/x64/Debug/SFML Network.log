@@ -1,4 +1,38 @@
-﻿  Graphics.cpp
+﻿  Client.cpp
+  console_messanger.cpp
+  Graphics.cpp
+  TextField.cpp
+d:\universe\c++\study_network\sfml network\textfield.cpp(38): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\universe\c++\study_network\sfml network\textfield.cpp(76): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\universe\c++\study_network\sfml network\textfield.cpp(115): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  Mouse.cpp
+d:\universe\c++\study_network\sfml network\mouse.cpp(5): warning C4244: аргумент: преобразование "T" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+  Server.cpp
+  main_graphics.cpp
   Graphics.h
+  SpriteHandler.cpp
+  User.cpp
+  Window.cpp
   Создание кода...
+x64\Debug\Graphics.obj : warning LNK4042: объект указан более одного раза; лишние не учитываются
   SFML Network.vcxproj -> D:\universe\C++\Study_network\SFML Network\x64\Debug\SFML Network.exe

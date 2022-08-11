@@ -144,7 +144,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="console_messanger.cpp" />
     <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="TextField.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="main_graphics.cpp" />
@@ -158,7 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
-    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="TextField.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="SpriteHandler.h" />

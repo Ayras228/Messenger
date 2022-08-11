@@ -2,6 +2,7 @@
 
 void Graphics::init()
 {
+    init_text();
     set_sprites();
     load_textures();
     rect_textures();
@@ -21,21 +22,30 @@ void Graphics::mouse_click(sf::Event event)
                 print_position(sprite_button[i]);
             }
         }
+        
     }
+    TextField::input(event);
 }
 
 
-void Graphics::draw()
+void Graphics::render()
 {
-    for (size_t i = 0; i < get_count_sprites(); i++)
+    //change render buttons
+    short count_sprites = get_count_sprites();
+    sf::RenderWindow *window = get_window().get();
+    for (size_t i = 0; i < count_sprites; i++)
     {
         sf::Sprite sprite = get_sprites()[i];
-        get_window()->draw(sprite);
+        window->draw(sprite);
     }
+    //
+    window->draw(*get_box());
+    window->draw(*get_txt());
+
 }
 
 
-sf::RenderWindow* Graphics::get_window()
+std::shared_ptr<sf::RenderWindow> Graphics::get_window()
 {
-    return Window::get_window();
+    return Window::get_ptr_window();
 }

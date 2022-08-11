@@ -1,6 +1,6 @@
 #pragma once
 #include"Window.h"
-
+#include<iostream>
 class Mouse :virtual Window
 {
 public:
