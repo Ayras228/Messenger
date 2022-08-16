@@ -1,5 +1,5 @@
 ﻿  SpriteHandler.cpp
-d:\universe\c++\study_network\sfml network\spritehandler.cpp(99): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+d:\universe\c++\study_network\sfml network\spritehandler.cpp(132): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
           with
           [
               T=float

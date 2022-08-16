@@ -2,19 +2,20 @@
 
 void SpriteHandler::set_sprites()
 {
-    background.setTexture(texture_background);
-    button1.setTexture(texture_button1);
-    //button2.setTexture(texture_button2);
-    //button3.setTexture(texture_button3);
+    Background.setTexture(texture_Background);
+    Talk.setTexture(texture_Talk);
+    Server.setTexture(texture_Server);
+    Client.setTexture(texture_Client);
     //frame.setTexture(texture_frame);
 
 
 }
 void SpriteHandler::load_textures()
 {
-    texture_background.loadFromFile("image\\Background.png");
-    texture_button1.loadFromFile("image\\Talk.png");
-
+    texture_Background.loadFromFile("image\\Background.png");
+    texture_Talk.loadFromFile("image\\Talk.png");
+    texture_Server.loadFromFile("image\\Server.png");
+    texture_Client.loadFromFile("image\\Client.png");
 }
 void SpriteHandler::rect_textures()
 {
@@ -63,13 +64,24 @@ short SpriteHandler::get_count_sprites()
 {
     return count_sprites;
 }
-
-void SpriteHandler::render()
+void SpriteHandler::renderBackground()
 {
     sf::RenderWindow* window = get_window();
-    for (size_t i = 0; i < count_sprites; i++)
+    window->draw(Background);
+}
+
+void SpriteHandler::render(short& level)
+{
+    sf::RenderWindow* window = get_window();
+    window->draw(*sprites[0]);
+    if (level == 1)
     {
-        window->draw(*sprites[i]);
+        window->draw(*sprites[1]);
+    }
+    if (level == 2)
+    {
+        window->draw(*sprites[2]);
+        window->draw(*sprites[3]);
     }
 }
 
@@ -78,18 +90,39 @@ void SpriteHandler::click(sf::Event &event, short &level)
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         for (short i = 0; i < count_buttons; i++)
+        {
             if (is_contains(*buttons[i], event))
             {
                 switch (i)
                 {
                 case 0:
-                    print_position(*buttons[i], event);
-                    level++;
+                    //Talk
+                    if (level==1)
+                    {
+                        print_position(*buttons[i], event);
+                        level++;  
+                    }
                     break;
-                    ///
+                case 1:
+                    //Server
+                    if (level == 2)
+                    {
+                        print_position(*buttons[i], event);
+                        level+=2;
+                    }
+                    
+                    break;
+                case 2:
+                    //Client
+                    if (level == 2)
+                    {
+                        print_position(*buttons[i], event);
+                        level++;
+                    }
+                    break;
                 }
-
             }
+        }
     }
 }
 

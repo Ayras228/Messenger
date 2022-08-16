@@ -40,6 +40,7 @@ private:
 
 	const uint8  TEXT_BACKSPACE = 8;
 	const uint8  TEXT_ESCAPE = 27;
+	const uint8  TEXT_ENTER = 13;
 
 	const sf::Color TEXT_GRAY = sf::Color(105, 105, 105);
 

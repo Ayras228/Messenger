@@ -65,6 +65,20 @@ void TextField::click(sf::Event &event, short& level) {
 		else if (event.text.unicode == TEXT_ESCAPE) {
 			setActive(false);
 		}
+		else if (event.text.unicode == TEXT_ENTER)
+		{
+			std::cout << "PRESS ENTER" << std::endl;
+			if (txt.getString().getSize()>8)
+			{
+				//func IP;
+				level++;
+			}
+			else
+			{
+				std::cout << "incorrect IP" << std::endl;
+			}
+			
+		}
 		else {
 			sf::String sfstr = "";
 			sfstr += event.text.unicode;
