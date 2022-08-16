@@ -1,7 +1,6 @@
 #include<SFML/Graphics.hpp>
 #include<iostream>
 #include<vector>
-#include<iterator>
 #include"Graphics.h"
 #include"Window.h"
 #include"TextField.h"
@@ -9,8 +8,8 @@ int main()
 {
     Graphics graph;
 
-    sf::RenderWindow *window = graph.get_window().get();
-    window->clear(sf::Color::Black);
+    sf::RenderWindow *window = graph.get_window();
+    
     graph.init();
 
      

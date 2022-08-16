@@ -2,12 +2,7 @@
 #include <string>
 #include"Window.h"
 
-const int GUI_TEXT_MAX = 24;
 
-const int GUI_TEXT_BACKSPACE = 8;
-const int GUI_TEXT_ESCAPE = 27;
-
-const sf::Color GUI_TEXT_GRAY = sf::Color(105, 105, 105);
 
 class TextField:public virtual Window
 {
@@ -18,7 +13,7 @@ public:
 
 	void setPosition(sf::Vector2f vec);
 
-	void input(sf::Event ev);
+	void click(sf::Event &event, short& level);
 
 	void setFont(sf::Font& f);
 
@@ -38,10 +33,20 @@ public:
 	sf::Text *get_txt();
 	sf::RectangleShape* get_box();
 private:
+	bool is_contains(sf::RectangleShape& sprite, sf::Event& event);
+	void print_position(sf::RectangleShape& sprite, sf::Event& event);
+
+	const uint8  TEXT_MAX = 24;
+
+	const uint8  TEXT_BACKSPACE = 8;
+	const uint8  TEXT_ESCAPE = 27;
+
+	const sf::Color TEXT_GRAY = sf::Color(105, 105, 105);
+
 	sf::Text txt;
 	sf::RectangleShape box;
-
-	int size;
+	sf::Font font;
+	uint8 size;
 
 	int length;
 

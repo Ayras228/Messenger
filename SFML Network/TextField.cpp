@@ -1,5 +1,5 @@
 #include "TextField.h"
-
+#include<iostream>
 TextField::TextField() 
 {
 	
@@ -12,20 +12,26 @@ TextField::TextField()
 
 	txt.setFillColor(sf::Color::Black);
 
-	size = GUI_TEXT_MAX;
+	size = TEXT_MAX;
 
 	length = 0;
+	
 }
 
 void TextField::init_text()
 {
-
-	sf::Font font;
 	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
 	setFont(font);
-	setLength(64);
-	setPlaceholder("Enter your message");
-	setPosition(sf::Vector2f(500, 300)); //координаты для ввода
+	setLength(24);
+	setPlaceholder("Enter IP friend ");
+	short width, height;
+	short wbow, hbox;
+	
+	wbow = box.getSize().x;
+	hbox = box.getSize().y;
+	std::tie(width, height)=get_size_window();
+	setPosition(sf::Vector2f((width- wbow)/2,
+		(height-hbox)/2 + height / 4));
 }
 
 void TextField::setPosition(sf::Vector2f vec) {
@@ -33,32 +39,35 @@ void TextField::setPosition(sf::Vector2f vec) {
 	txt.setPosition(vec + sf::Vector2f(5, 5));
 }
 
-void TextField::input(sf::Event ev) {
-	if (ev.type == sf::Event::MouseButtonReleased) {
-		sf::Vector2f pos(ev.mouseButton.x, ev.mouseButton.y);
-		if (box.getGlobalBounds().contains(pos)) {
+void TextField::click(sf::Event &event, short& level) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		if (is_contains(box, event))
+		{
 			setActive(true);
+
 		}
-		else {
+		else
+		{
 			setActive(false);
 		}
 	}
 
-	if (ev.type == sf::Event::TextEntered && active) {
+	if (event.type == sf::Event::TextEntered && active) {
 		sf::String str = txt.getString();
 
-		if (ev.text.unicode == GUI_TEXT_BACKSPACE) {
+		if (event.text.unicode == TEXT_BACKSPACE) {
 			if (str.getSize() > 0) {
 				length--;
 				str = str.substring(0, str.getSize() - 1);
 			}
 		}
-		else if (ev.text.unicode == GUI_TEXT_ESCAPE) {
+		else if (event.text.unicode == TEXT_ESCAPE) {
 			setActive(false);
 		}
 		else {
 			sf::String sfstr = "";
-			sfstr += ev.text.unicode;
+			sfstr += event.text.unicode;
 			str += sfstr.toAnsiString();
 		}
 
@@ -66,6 +75,8 @@ void TextField::input(sf::Event ev) {
 
 		txt.setString(str);
 		length++;
+		std::cout << txt.getString().toAnsiString() << std::endl;
+		//std::cout << txt.<<std::endl;
 	}
 }
 
@@ -73,7 +84,8 @@ void TextField::setFont(sf::Font& f) {
 	txt.setFont(f);
 	txt.setCharacterSize(24);
 
-	box.setSize(sf::Vector2f((txt.getCharacterSize() * (size / 2 + 1)) + 10, txt.getCharacterSize() + 10));
+	box.setSize(sf::Vector2f((txt.getCharacterSize()* 
+		(size / 2 + 1)) + 10, txt.getCharacterSize() + 10));
 }
 
 const sf::String& TextField::getText() {
@@ -81,8 +93,8 @@ const sf::String& TextField::getText() {
 }
 
 void TextField::render() {
-	get_ptr_window().get()->draw(box);
-	get_ptr_window().get()->draw(txt);
+	get_window()->draw(box);
+	get_window()->draw(txt);
 }
 
 void TextField::setActive(bool arg) {
@@ -104,7 +116,7 @@ void TextField::setActive(bool arg) {
 void TextField::setPlaceholder(std::string str) {
 	placeholder = str;
 	renderPlaceholder = true;
-	txt.setFillColor(GUI_TEXT_GRAY);
+	txt.setFillColor(TEXT_GRAY);
 	txt.setString(placeholder);
 	setActive(false);
 }
@@ -112,7 +124,8 @@ void TextField::setPlaceholder(std::string str) {
 void TextField::setLength(int arg) {
 	size = arg;
 
-	box.setSize(sf::Vector2f((txt.getCharacterSize() * (size / 2 + 1)) + 10, txt.getCharacterSize() + 10));
+	box.setSize(sf::Vector2f((txt.getCharacterSize() *
+		(size / 2 + 1)) + 10, txt.getCharacterSize() + 10));
 }
 
 int TextField::getTextLength() {
@@ -129,10 +142,30 @@ void TextField::open() {
 
 sf::Text* TextField::get_txt()
 {
+	
 	return &txt;
 }
 
 sf::RectangleShape* TextField::get_box()
 {
 	return &box;
+}
+bool TextField::is_contains(sf::RectangleShape& sprite, sf::Event& event)
+{
+	if (sprite.getGlobalBounds().contains
+	(event.mouseButton.x, event.mouseButton.y))
+	{
+		return true;
+	}
+	return false;
+
+}
+
+void TextField::print_position(sf::RectangleShape& sprite, sf::Event& event)
+{
+	std::cout << "the left button was pressed" << std::endl;
+	std::cout << "x: " << event.mouseButton.x << std::endl;
+	std::cout << "y: " << event.mouseButton.y << std::endl;
+	std::cout << "sprite x: " << sprite.getPosition().x << std::endl;
+	std::cout << "sprite y: " << sprite.getPosition().y << std::endl;
 }

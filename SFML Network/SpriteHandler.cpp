@@ -12,10 +12,8 @@ void SpriteHandler::set_sprites()
 }
 void SpriteHandler::load_textures()
 {
-    texture_background.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\Background.png");
-    texture_button1.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\Talk.png");
-    //texture_button2.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\Talk.png");
-    //texture_button3.loadFromFile("D:\\universe\\C++\\Study_network\\SFML Network\\image\\Talk.png");
+    texture_background.loadFromFile("image\\Background.png");
+    texture_button1.loadFromFile("image\\Talk.png");
 
 }
 void SpriteHandler::rect_textures()
@@ -28,7 +26,8 @@ void SpriteHandler::rect_textures()
         short rectTop = rect_len_sprite[index][1];
         short rectWidth = rect_len_sprite[index][2];
         short rectHeight = rect_len_sprite[index][3];
-        sprite->setTextureRect(sf::IntRect(rectLeft, rectTop, rectWidth, rectHeight));
+        sprite->setTextureRect(sf::IntRect(rectLeft, 
+            rectTop, rectWidth, rectHeight));
         index++;
     }
 }
@@ -43,8 +42,6 @@ void SpriteHandler::set_positions()
         sprite->setPosition(x0, y0);
         index++;
     }
-
-
 }
 
 sf::Sprite* SpriteHandler::get_buttons()
@@ -65,4 +62,55 @@ short SpriteHandler::get_count_buttons()
 short SpriteHandler::get_count_sprites()
 {
     return count_sprites;
+}
+
+void SpriteHandler::render()
+{
+    sf::RenderWindow* window = get_window();
+    for (size_t i = 0; i < count_sprites; i++)
+    {
+        window->draw(*sprites[i]);
+    }
+}
+
+void SpriteHandler::click(sf::Event &event, short &level)
+{
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        for (short i = 0; i < count_buttons; i++)
+            if (is_contains(*buttons[i], event))
+            {
+                switch (i)
+                {
+                case 0:
+                    print_position(*buttons[i], event);
+                    level++;
+                    break;
+                    ///
+                }
+
+            }
+    }
+}
+
+bool SpriteHandler::is_contains(sf::Sprite& sprite, sf::Event& event)
+{
+    if (sprite.getGlobalBounds().contains
+    (event.mouseButton.x, event.mouseButton.y))
+    {
+        return true;
+    }
+    return false;
+
+}
+
+void SpriteHandler::print_position(sf::Sprite& sprite,
+ sf::Event& event)
+{
+    std::cout << "the left button was pressed" << std::endl;
+    std::cout << "x: " << event.mouseButton.x << std::endl;
+    std::cout << "y: " << event.mouseButton.y << std::endl;
+    std::cout << "sprite x0: " << sprite.getPosition().x  << std::endl;
+    std::cout << "sprite y0: " << sprite.getPosition().y  << std::endl;
+    
 }
