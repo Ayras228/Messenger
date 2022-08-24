@@ -2,6 +2,7 @@
 
 #include"Window.h"
 #include<iostream>
+#include<future>
 class SpriteHandler:public virtual Window
 {
 public:
@@ -15,64 +16,74 @@ public:
     short get_count_sprites();
     void renderBackground();
     void render(short& level);
-    void click(sf::Event &event,short &level);
+    void click(sf::Event &event,short &level, std::promise<char> &type_promise);
+    
 private:
+    void check_level(sf::Event& event, short index, short& level, std::promise<char>& type_promise);
     bool is_contains(sf::Sprite& sprite, sf::Event& event);
     void print_position(sf::Sprite& sprite, sf::Event& event);
-    static uint8 const count_sprites = 4;
-    static short const count_buttons = 3;
+    static uint8 const count_sprites = 5;
+    static short const count_buttons = 4;
     //static uint8 const count_buttons = 1;
-    static uint8 const rect_count_param = 4;
+    static uint8 const rect_count_param = 5;
     static uint8 const position_count_param = 2;
 
     sf::Texture texture_Talk, texture_Server, texture_Client,
-        texture_Background;
+        texture_Background, texture_Enter_name;
     sf::Texture* textures[count_sprites] = 
     { &texture_Talk, &texture_Server, &texture_Client,
-        &texture_Background};
+        &texture_Background,&texture_Enter_name };
 
-    sf::Sprite Background, Talk, Server, Client;
+    sf::Sprite Background, Talk, Server, Client, Enter_name;
     sf::Sprite* sprites[count_sprites] = 
-{ &Background ,&Talk, &Server, &Client};
-    sf::Sprite* buttons[count_buttons] = { &Talk, &Server, &Client };
+{ &Background ,&Talk, &Server, &Client,&Enter_name };
+    sf::Sprite* buttons[count_buttons] = { &Talk, &Server, &Client,&Enter_name };
 
     short width = get_WIDTH();
     short height = get_HEIGHT();
 
-    short TALKlenwidth = 329;
-    short TALKlenheight = 111;
+    short TalkLenWidth = 329;
+    short TalkLenHeight = 111;
 
-    short Serverlenwidth = 417;
-    short Serverlenheight = 111;
+    short ServerLenWidth = 417;
+    short ServerLenHeight = 111;
 
-    short Clientlenwidth = 435;
-    short Clientlenheight = 111;
+    short ClientLenWidth = 435;
+    short ClientLenHeight = 111;
+
+    short EnterNameLenWidth = 650;
+    short EnterNameLenHeight = 104;
 
     short rect_len_sprite[count_sprites][rect_count_param] =
     {
         {0,0, width,height},
-        {0,0, TALKlenwidth, TALKlenheight},
-        {0,0, Serverlenwidth, Serverlenheight},
-        {0,0, Clientlenwidth, Clientlenheight}
+        {0,0, TalkLenWidth, TalkLenHeight},
+        {0,0, ServerLenWidth, ServerLenHeight},
+        {0,0, ClientLenWidth, ClientLenHeight},
+        {0,0, EnterNameLenWidth, EnterNameLenHeight},
     };
-    short posBackgroundwidth = 0;
-    short posBackgroundheight = 0;
+    short PosBackgroundWidth = 0;
+    short PosBackgroundheight = 0;
 
-    short posTALKwidth = (width - TALKlenwidth) / 2;
-    short posTALKheight = (height - TALKlenheight) / 2 - height/5;
+    short PosTalkWidth = (width - TalkLenWidth) / 2;
+    short PosTalkHeight = (height - TalkLenHeight) / 2 - height/5;
 
-    short posServerwidth = (width - Serverlenwidth) / 2 + width / 4;
-    short posServerheight = (height - Serverlenheight) / 2 + height / 5;
+    short PosServerWidth = (width - ServerLenWidth) / 2 + width / 4;
+    short PosServerHeight = (height - ServerLenHeight) / 2 + height / 5;
 
-    short posClientwidth = (width - Clientlenwidth) / 2 - width / 4;
-    short posClientheight = (height - Clientlenheight) / 2 + height / 5;
+    short PosClientWidth = (width - ClientLenWidth) / 2 - width / 4;
+    short PosClientHeight = (height - ClientLenHeight) / 2 + height / 5;
+
+    short PosEnterNameWidth = (width - EnterNameLenWidth) / 2 ;
+    short PosEnterNameHeight = (height - EnterNameLenHeight) / 2 - height / 5;
 
     short position_sprite[count_sprites][position_count_param] =
     {
-        {posBackgroundwidth,posBackgroundheight},
-        {posTALKwidth,posTALKheight},
-        {posServerwidth,posServerheight},
-        {posClientwidth,posClientheight},
+        {PosBackgroundWidth,PosBackgroundheight},
+        {PosTalkWidth,PosTalkHeight},
+        {PosServerWidth,PosServerHeight},
+        {PosClientWidth,PosClientHeight},
+        {PosEnterNameWidth,PosEnterNameHeight}
     };
 };
 

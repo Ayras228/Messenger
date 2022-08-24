@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include"Window.h"
-
+#include<future>
 
 
 class TextField:public virtual Window
@@ -13,7 +13,7 @@ public:
 
 	void setPosition(sf::Vector2f vec);
 
-	void click(sf::Event &event, short& level);
+	void click(sf::Event &event, short& level, std::promise<std::string>& connect_ip_promise);
 
 	void setFont(sf::Font& f);
 
@@ -21,7 +21,7 @@ public:
 
 	void setPlaceholder(std::string str);
 
-	void render();
+	void render(short& level);
 
 	void setLength(int arg);
 

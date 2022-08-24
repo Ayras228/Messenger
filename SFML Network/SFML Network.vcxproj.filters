@@ -21,7 +21,7 @@
     <ClCompile Include="main_graphics.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="console_messanger.cpp">
+    <ClCompile Include="console_messenger.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
     <ClCompile Include="User.cpp">

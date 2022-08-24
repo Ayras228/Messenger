@@ -6,7 +6,7 @@ void SpriteHandler::set_sprites()
     Talk.setTexture(texture_Talk);
     Server.setTexture(texture_Server);
     Client.setTexture(texture_Client);
-    //frame.setTexture(texture_frame);
+    Enter_name.setTexture(texture_Enter_name);
 
 
 }
@@ -16,6 +16,7 @@ void SpriteHandler::load_textures()
     texture_Talk.loadFromFile("image\\Talk.png");
     texture_Server.loadFromFile("image\\Server.png");
     texture_Client.loadFromFile("image\\Client.png");
+    texture_Enter_name.loadFromFile("image\\EnterName.png");
 }
 void SpriteHandler::rect_textures()
 {
@@ -74,7 +75,7 @@ void SpriteHandler::render(short& level)
 {
     sf::RenderWindow* window = get_window();
     window->draw(*sprites[0]);
-    if (level == 1)
+    if (level == 1|| level == 3)
     {
         window->draw(*sprites[1]);
     }
@@ -83,9 +84,13 @@ void SpriteHandler::render(short& level)
         window->draw(*sprites[2]);
         window->draw(*sprites[3]);
     }
+    if (level==4)
+    {
+        window->draw(*sprites[4]);
+    }
 }
 
-void SpriteHandler::click(sf::Event &event, short &level)
+void SpriteHandler::click(sf::Event &event, short &level, std::promise<char>& type_promise)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -93,39 +98,46 @@ void SpriteHandler::click(sf::Event &event, short &level)
         {
             if (is_contains(*buttons[i], event))
             {
-                switch (i)
-                {
-                case 0:
-                    //Talk
-                    if (level==1)
-                    {
-                        print_position(*buttons[i], event);
-                        level++;  
-                    }
-                    break;
-                case 1:
-                    //Server
-                    if (level == 2)
-                    {
-                        print_position(*buttons[i], event);
-                        level+=2;
-                    }
-                    
-                    break;
-                case 2:
-                    //Client
-                    if (level == 2)
-                    {
-                        print_position(*buttons[i], event);
-                        level++;
-                    }
-                    break;
-                }
+                check_level(event, i, level, type_promise);
             }
         }
     }
 }
-
+void SpriteHandler::check_level(sf::Event& event,short index ,short& level,  std::promise<char>& type_promise)
+{
+    switch (index)
+    {
+    case 0:
+        //Talk
+        if (level == 1)
+        {
+            print_position(*buttons[index], event);
+            level++;
+        }
+        break;
+    case 1:
+        //Server
+        if (level == 2)
+        {
+            
+            print_position(*buttons[index], event);
+            //type_user = 's';
+            type_promise.set_value('s');
+            level += 2;
+        }
+        break;
+    case 2:
+        //Client
+        if (level == 2)
+        {
+            print_position(*buttons[index], event);
+            //type_user = 'c';
+            type_promise.set_value('c');
+            level++;
+        }
+        break;
+    }
+}
 bool SpriteHandler::is_contains(sf::Sprite& sprite, sf::Event& event)
 {
     if (sprite.getGlobalBounds().contains

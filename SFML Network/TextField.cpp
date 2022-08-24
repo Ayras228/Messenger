@@ -39,7 +39,8 @@ void TextField::setPosition(sf::Vector2f vec) {
 	txt.setPosition(vec + sf::Vector2f(5, 5));
 }
 
-void TextField::click(sf::Event &event, short& level) {
+void TextField::click(sf::Event& event, short& level, std::promise<std::string>& connect_ip_promise)
+{
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		if (is_contains(box, event))
@@ -70,7 +71,9 @@ void TextField::click(sf::Event &event, short& level) {
 			std::cout << "PRESS ENTER" << std::endl;
 			if (txt.getString().getSize()>8)
 			{
-				//func IP;
+				//set IPfriend;
+				std::string connect_ip = txt.getString().toAnsiString();
+				connect_ip_promise.set_value(connect_ip);
 				level++;
 			}
 			else
@@ -89,8 +92,9 @@ void TextField::click(sf::Event &event, short& level) {
 
 		txt.setString(str);
 		length++;
-		std::cout << txt.getString().toAnsiString() << std::endl;
-		//std::cout << txt.<<std::endl;
+		//IPfriend
+		//std::cout << txt.getString().toAnsiString() << std::endl;
+
 	}
 }
 
@@ -106,9 +110,13 @@ const sf::String& TextField::getText() {
 	return txt.getString();
 }
 
-void TextField::render() {
-	get_window()->draw(box);
-	get_window()->draw(txt);
+void TextField::render(short &level)
+{
+	if (level == 3)
+	{
+		get_window()->draw(box);
+		get_window()->draw(txt);
+	}
 }
 
 void TextField::setActive(bool arg) {
