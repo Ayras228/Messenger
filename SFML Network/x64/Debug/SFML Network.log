@@ -1,3 +1,40 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v150\Microsoft.CppBuild.targets(391,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (SFML Network.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  Client.cpp
+  console_messenger.cpp
+  Graphics.cpp
+  TextField.cpp
+d:\universe\c++\study_network\sfml network\textfield.cpp(33): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\universe\c++\study_network\sfml network\textfield.cpp(105): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\universe\c++\study_network\sfml network\textfield.cpp(149): warning C4244: аргумент: преобразование "unsigned int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+d:\universe\c++\study_network\sfml network\textfield.cpp(177): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  Server.cpp
   main_graphics.cpp
+d:\universe\c++\study_network\sfml network\main_graphics.cpp(39): warning C4244: аргумент: преобразование "float" в "unsigned int", возможна потеря данных
+  Graphics.h
+  SpriteHandler.cpp
+d:\universe\c++\study_network\sfml network\spritehandler.cpp(150): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  User.cpp
+  Window.cpp
+  Создание кода...
+x64\Debug\Graphics.obj : warning LNK4042: объект указан более одного раза; лишние не учитываются
   SFML Network.vcxproj -> D:\universe\C++\Study_network\SFML Network\x64\Debug\Messenger.exe

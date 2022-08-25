@@ -1,14 +1,14 @@
-#include<iostream>
-#include<vector>
-#include"TextField.h"
-#include"SpriteHandler.h"
-
-
-#include<chrono>
+#include <iostream>
+#include <vector>
+#include <chrono>
 #include <thread>
 #include <future>
-class Graphics :  public virtual Window,
-    public virtual SpriteHandler, public virtual TextField
+
+#include "TextField.h"
+#include "SpriteHandler.h"
+
+
+class Graphics
 {
 public:
     Graphics();
@@ -18,13 +18,18 @@ public:
     std::thread thread_click(sf::Event& event);
 
     void render();
-    sf::RenderWindow* get_window();
+    sf::RenderWindow* get_renderwindow();
     
     std::future<char> *get_type();
     std::future<std::string>* get_connect_ip();
 private:
     std::promise<char> type_promise; 
     std::future<char> type;
+    
+    Window* window;
+    SpriteHandler* spritehandler;
+    TextField* textfield;
+    
 
     //std::string connect_ip;
     std::promise<std::string> connect_ip_promise;

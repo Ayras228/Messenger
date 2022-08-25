@@ -1,6 +1,7 @@
 #include<SFML/Graphics.hpp>
 #include<iostream>
 #include<vector>
+
 #include"Graphics.h"
 #include"Window.h"
 #include"TextField.h"
@@ -11,14 +12,14 @@
 #include"console_messenger.cpp"
 
 #include<chrono>
-#include <thread>
-#include <future>
+#include<thread>
+#include<future>
 
 //DELTA_TIME = 1.0f / 60.0f
 
 void renderThread(Graphics *graph)
 {    
-	sf::RenderWindow* window=graph->get_window();
+	sf::RenderWindow* window=graph->get_renderwindow();
 
 	while (window->isOpen())
 	{
@@ -31,14 +32,13 @@ int main()
 {
     Graphics graph;
 
-    sf::RenderWindow *window = graph.get_window();
+    sf::RenderWindow *window = graph.get_renderwindow();
 
 	//FPS
 	float  const DELTA_TIME = 1.0f / 15.0f;
 	window->setFramerateLimit(1.0f / DELTA_TIME);
 
     graph.init();
-
 
 	// deactivate its OpenGL context
 	window->setActive(false);
@@ -53,10 +53,7 @@ int main()
 		connecting(type, graph.get_connect_ip());
 
 	});
-   
-	
-	
-	
+
 	//Event
 	while (window->isOpen())
     {
@@ -69,7 +66,6 @@ int main()
 			std::thread threadClick = graph.thread_click(event);
 			threadClick.join();
 		}
-
     }
 	connect.join();
     return 0;

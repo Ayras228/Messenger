@@ -1,8 +1,8 @@
 #include "TextField.h"
-#include<iostream>
-TextField::TextField() 
+
+TextField::TextField(Window *window) 
 {
-	
+	this->window = window;
 	active = false;
 	box.setFillColor(sf::Color::White);
 	box.setOutlineThickness(3);
@@ -27,11 +27,10 @@ void TextField::init_text()
 	short width, height;
 	short wbow, hbox;
 	
-	wbow = box.getSize().x;
-	hbox = box.getSize().y;
-	std::tie(width, height)=get_size_window();
-	setPosition(sf::Vector2f((width- wbow)/2,
-		(height-hbox)/2 + height / 4));
+	wbow = static_cast<short>(box.getSize().x);
+	hbox = static_cast<short>(box.getSize().y);
+	std::tie(width, height)= window->get_size_window();
+	setPosition(sf::Vector2f((width- wbow)/2,(height-hbox)/2 + height / 4));
 }
 
 void TextField::setPosition(sf::Vector2f vec) {
@@ -39,18 +38,18 @@ void TextField::setPosition(sf::Vector2f vec) {
 	txt.setPosition(vec + sf::Vector2f(5, 5));
 }
 
-void TextField::click(sf::Event& event, short& level, std::promise<std::string>& connect_ip_promise)
+void TextField::input(sf::Event& event, short& level, std::promise<std::string>& connect_ip_promise)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		if (is_contains(box, event))
 		{
-			setActive(true);
+			setActiveText(true);
 
 		}
 		else
 		{
-			setActive(false);
+			setActiveText(false);
 		}
 	}
 
@@ -64,7 +63,7 @@ void TextField::click(sf::Event& event, short& level, std::promise<std::string>&
 			}
 		}
 		else if (event.text.unicode == TEXT_ESCAPE) {
-			setActive(false);
+			setActiveText(false);
 		}
 		else if (event.text.unicode == TEXT_ENTER)
 		{
@@ -114,12 +113,12 @@ void TextField::render(short &level)
 {
 	if (level == 3)
 	{
-		get_window()->draw(box);
-		get_window()->draw(txt);
+		window->get_renderwindow()->draw(box);
+		window->get_renderwindow()->draw(txt);
 	}
 }
 
-void TextField::setActive(bool arg) {
+void TextField::setActiveText(bool arg) {
 	active = arg;
 	if (active) {
 		box.setOutlineColor(sf::Color::Red);
@@ -140,7 +139,7 @@ void TextField::setPlaceholder(std::string str) {
 	renderPlaceholder = true;
 	txt.setFillColor(TEXT_GRAY);
 	txt.setString(placeholder);
-	setActive(false);
+	setActiveText(false);
 }
 
 void TextField::setLength(int arg) {
@@ -159,7 +158,7 @@ bool TextField::isActive() {
 }
 
 void TextField::open() {
-	setActive(true);
+	setActiveText(true);
 }
 
 sf::Text* TextField::get_txt()

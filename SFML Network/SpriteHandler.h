@@ -1,11 +1,11 @@
 #pragma once
-
 #include"Window.h"
 #include<iostream>
 #include<future>
-class SpriteHandler:public virtual Window
+class SpriteHandler
 {
 public:
+    SpriteHandler(Window*window);
     void set_sprites();
     void load_textures();
     void rect_textures();
@@ -19,6 +19,8 @@ public:
     void click(sf::Event &event,short &level, std::promise<char> &type_promise);
     
 private:
+    Window* window;
+    
     void check_level(sf::Event& event, short index, short& level, std::promise<char>& type_promise);
     bool is_contains(sf::Sprite& sprite, sf::Event& event);
     void print_position(sf::Sprite& sprite, sf::Event& event);
@@ -39,8 +41,63 @@ private:
 { &Background ,&Talk, &Server, &Client,&Enter_name };
     sf::Sprite* buttons[count_buttons] = { &Talk, &Server, &Client,&Enter_name };
 
-    short width = get_WIDTH();
-    short height = get_HEIGHT();
+    void init_button();
+
+    short width; 
+    short height;
+
+    short TalkLenWidth;
+    short TalkLenHeight;
+
+    short ServerLenWidth;
+    short ServerLenHeight;
+
+    short ClientLenWidth ;
+    short ClientLenHeight;
+
+    short EnterNameLenWidth;
+    short EnterNameLenHeight;
+
+    short rect_len_sprite[count_sprites][rect_count_param];
+    /*short rect_len_sprite[count_sprites][rect_count_param] =
+    {
+        {0,0, width,height},
+        {0,0, TalkLenWidth, TalkLenHeight},
+        {0,0, ServerLenWidth, ServerLenHeight},
+        {0,0, ClientLenWidth, ClientLenHeight},
+        {0,0, EnterNameLenWidth, EnterNameLenHeight},
+    };*/
+
+
+    short PosBackgroundWidth;
+    short PosBackgroundheight;
+
+    short PosTalkWidth ;
+    short PosTalkHeight;
+
+    short PosServerWidth;
+    short PosServerHeight;
+
+    short PosClientWidth;
+    short PosClientHeight;
+
+    short PosEnterNameWidth;
+    short PosEnterNameHeight;
+
+    short position_sprite[count_sprites][position_count_param];
+    /*short position_sprite[count_sprites][position_count_param] =
+    {
+        {PosBackgroundWidth,PosBackgroundheight},
+        {PosTalkWidth,PosTalkHeight},
+        {PosServerWidth,PosServerHeight},
+        {PosClientWidth,PosClientHeight},
+        {PosEnterNameWidth,PosEnterNameHeight}
+    };*/
+
+
+
+    /*short width = window->get_WIDTH();
+    short height = window->get_HEIGHT();
 
     short TalkLenWidth = 329;
     short TalkLenHeight = 111;
@@ -84,6 +141,6 @@ private:
         {PosServerWidth,PosServerHeight},
         {PosClientWidth,PosClientHeight},
         {PosEnterNameWidth,PosEnterNameHeight}
-    };
+    };*/
 };
 

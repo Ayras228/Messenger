@@ -11,7 +11,7 @@ public:
     Window(uint16 WIDTH, uint16 HEIGHT, std::string name);
     virtual ~Window();
     //std::shared_ptr<sf::RenderWindow> get_ptr_window();
-    sf::RenderWindow* get_window();
+    sf::RenderWindow* get_renderwindow();
     std::pair< uint16, uint16> get_size_window()const;
     uint16 get_HEIGHT()const;
     uint16 get_WIDTH()const;

@@ -2,18 +2,18 @@
 #include <string>
 #include"Window.h"
 #include<future>
+#include<iostream>
 
-
-class TextField:public virtual Window
+class TextField
 {
 public:
-	TextField();
+	TextField(Window* window);
 
 	void init_text();
 
 	void setPosition(sf::Vector2f vec);
 
-	void click(sf::Event &event, short& level, std::promise<std::string>& connect_ip_promise);
+	void input(sf::Event &event, short& level, std::promise<std::string>& connect_ip_promise);
 
 	void setFont(sf::Font& f);
 
@@ -49,15 +49,12 @@ private:
 	sf::Font font;
 	uint8 size;
 
+	Window *window;
+
 	int length;
-
 	bool renderPlaceholder;
-
-	void setActive(bool arg);
-
+	void setActiveText(bool arg);
 	bool active;
-
 	sf::Vector2f pos;
-
 	std::string placeholder;
 };

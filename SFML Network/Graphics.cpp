@@ -2,19 +2,23 @@
 
 Graphics::Graphics()
 {
+    window = new Window;
+    textfield = new TextField(window);
+    spritehandler = new SpriteHandler(window);
     level = 1;
-    //type_user = ' ';
     type = type_promise.get_future();
     connect_ip = connect_ip_promise.get_future();
+
+    
 }
 
 void Graphics::init()
 {
-    init_text();
-    set_sprites();
-    load_textures();
-    rect_textures();
-    set_positions(); 
+    textfield->init_text();
+    spritehandler->set_sprites();
+    spritehandler->load_textures();
+    spritehandler->rect_textures();
+    spritehandler->set_positions();
 }
 
 
@@ -23,26 +27,26 @@ void Graphics::mouse_click(sf::Event& event)
 {
     if (level<=4)
     {
-        SpriteHandler::click(event, level, type_promise);
+        spritehandler->click(event, level, type_promise);
     }
 
     if (level == 3)
     {
-        TextField::click(event, level, connect_ip_promise);
+        textfield->input(event, level, connect_ip_promise);
     }
 }
 
 
 void Graphics::render()
 {
-    SpriteHandler::render(level);
-    TextField::render(level);
+    spritehandler->render(level);
+    textfield->render(level);
 }
 
 
-sf::RenderWindow* Graphics::get_window()
+sf::RenderWindow* Graphics::get_renderwindow()
 {
-    return Window::get_window();
+    return window->get_renderwindow();
 }
 
 

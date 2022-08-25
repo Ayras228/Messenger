@@ -33,7 +33,7 @@ Window::~Window()
 //    return ptr_window;
 //}
 
-sf::RenderWindow* Window::get_window()
+sf::RenderWindow* Window::get_renderwindow()
 {
     return  &window;
 }
